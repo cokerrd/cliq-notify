@@ -1,0 +1,35 @@
+{
+  "name": "cliq-notify",
+  "version": "1.0.0",
+  "description": "A custom github action to send notifications to zoho cliq",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ozii-cr/cliq-notify.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "JavaScript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ozii-cr/cliq-notify/issues"
+  },
+  "homepage": "https://github.com/Ozii-cr/cliq-notify#readme",
+  "private": "true",
+  "engines": {
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1"
+  }
+}
