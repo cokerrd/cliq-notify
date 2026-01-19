@@ -1,0 +1,57 @@
+name: Tests
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    steps:
+      - name: "build: checkout the latest changes"
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: "build: setup the node runtime"
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0s
+        with:
+          cache: npm
+          cache-dependency-path: package-lock.json
+          node-version-file: .nvmrc
+
+      - name: "build: install the required dependencies"
+        run: npm ci
+
+      - name: "unit(test): perform lints and formatting checks"
+        run: npm run lint
+
+      - name: "unit(test): perform unit test checks"
+        run: npm test
+
+      - name: "build: package code for distribution"
+        run: npm run package
+
+      - name: "integration: send a message using the cliq url"
+        uses: ./
+        with:
+          cliq-url: ${{ secrets.CLIQ_URL }}
+          message: "testing 1.2..3..."
+
+      - name: "integration: send a file using the cliq url"
+        uses: ./
+        with:
+          cliq-url: ${{ secrets.CLIQ_URL }}
+          file: "./test/test.txt"
+
+
+
+

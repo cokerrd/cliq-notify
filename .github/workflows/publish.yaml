@@ -1,0 +1,51 @@
+name: Publish
+
+on:
+  release:
+    types: 
+      - published
+      - edited
+
+jobs:
+  build:
+    name: Build and tag a new version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout the current code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Configure the runtime node
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          cache: npm
+          cache-dependency-path: package-lock.json
+          node-version-file: .nvmrc
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Build a production release
+        run: npm run build
+
+      - name: Distribute the latest tagged release
+        id: tag
+        uses: teunmooij/github-versioned-release@3edf649c6e5e5e976d43f2584b15bdc8b4c8f0df # v1.2.1
+        with:
+          template: javascript-action
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Create a branch for tagged release
+        run: |
+          git fetch origin "$SHA"
+          git checkout -b "release/$TAG" "$SHA"
+          git push origin "release/$TAG"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          SHA: ${{ steps.tag.outputs.sha }}
