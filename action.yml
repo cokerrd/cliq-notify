@@ -1,0 +1,22 @@
+name: 'Zoho Cliq Notification'
+author: "Richard Coker"
+description: 'Send messages and files to Zoho Cliq channels'
+branding:
+  icon: 'message-square'
+  color: 'white'
+inputs:
+  cliq-url:
+    description: 'Zoho Cliq URL'
+    required: true
+  message:
+    description: 'Message text to send'
+    required: false
+  file:
+    description: 'Path to a file containing the message to send'
+    required: false
+outputs:
+  ok:
+    description: "If the request completed without returning errors."
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
