@@ -30,6 +30,6 @@
     ".": "./dist/index.js"
   },
   "devDependencies": {
-    "eslint": "^9.39.1"
+    "eslint": "^9.39.2"
   }
 }
