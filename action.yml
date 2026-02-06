@@ -14,6 +14,10 @@ inputs:
   file:
     description: 'Path to a file containing the message to send'
     required: false
+  file-caption:
+    description: 'Caption for the uploaded file'
+    required: false
+    default: ''
 outputs:
   ok:
     description: "If the request completed without returning errors."
