@@ -84,13 +84,9 @@ async function validateInputs(inputs) {
   const validated = {};
 
   try {
-    validated.cliqUrl = Validator.validateCliqUrl(inputs.cliqUrl);
+    validated.cliqUrl = validateCliqUrl(inputs.cliqUrl);
   } catch (error) {
     errors.push(`cliq-url: ${error.message}`);
-  }
-
-  if (inputs.file && inputs.message) {
-    errors.push('Cannot provide both "message" and "file" inputs. Choose one.');
   }
 
   if (!inputs.file && !inputs.message) {
@@ -99,7 +95,7 @@ async function validateInputs(inputs) {
 
   if (inputs.message) {
     try {
-      validated.message = Validator.validateMessage(inputs.message);
+      validated.message = validateMessage(inputs.message);
     } catch (error) {
       errors.push(`message: ${error.message}`);
     }
@@ -107,7 +103,7 @@ async function validateInputs(inputs) {
 
   if (inputs.file) {
     try {
-      validated.fileInfo = await Validator.validateFile(inputs.file);
+      validated.file = await validateFile(inputs.file);
     } catch (error) {
       errors.push(`file: ${error.message}`);
     }
