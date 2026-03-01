@@ -93,6 +93,10 @@ async function validateInputs(inputs) {
     errors.push('Either "message" or "file" input must be provided');
   }
 
+  if (inputs.file && inputs.message) {
+    errors.push('Cannot provide both "message" and "file" inputs. Choose one.');
+  }
+
   if (inputs.message) {
     try {
       validated.message = validateMessage(inputs.message);

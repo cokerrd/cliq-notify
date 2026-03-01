@@ -95,6 +95,6 @@ describe("Validation tests", () => {
     fs.access.mockResolvedValue();
     fs.stat.mockResolvedValue({ size: 10240 });
 
-    await expect(validator.validateInputs(inputs)).resolves.not.toThrow(Error);
+    await expect(validator.validateInputs(inputs)).rejects.toThrow(Error);
   });
 });
